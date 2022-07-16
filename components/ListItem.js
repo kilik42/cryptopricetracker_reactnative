@@ -2,28 +2,28 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const ListItem = () => {
+const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoUrl}) => {
   return (
     <TouchableOpacity>
-      <Text style= {styles.itemWrapper}>
+      <View style= {styles.itemWrapper}>
 
         {/* LEFT SIDE */}
         <View style={styles.itemLeft}>
-            <Image source = {{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png'}} style = {styles.image}/>
+            <Image source = {{uri: logoUrl}} style = {styles.image}/>
             <View style={styles.titlesWrapper}>
-                <Text style = {styles.title}>Ethereum </Text>
-                <Text style = {styles.subtitle}>Eth</Text>
+                <Text style = {styles.title}>{name}</Text>
+                <Text style = {styles.subtitle}>{symbol}</Text>
             </View>
         </View>
         {/* Rightside */}
         <View style={styles.itemRight}>
-                <Text style = {styles.title}>Ethereum </Text>
-                <Text style = {[styles.subtitle, {color: 'red'}]}>Eth</Text>
+                <Text style = {styles.title}>{currentPrice}</Text>
+                <Text style = {[styles.subtitle, {color: 'red'}]}>{priceChangePercentage7d}</Text>
         </View> 
 
 
 
-      </Text>
+      </View>
     </TouchableOpacity>
   )
 }
@@ -35,30 +35,34 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottomWidth: StyleSheet.hairlineWidth,
+       
         borderBottomColor: '#A9ABB1',
         
     },
     itemLeft: {
-
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     itemRight: {
-
+        alignItems: "flex-end"
     },
     itemSubtitle: {
-
+    
     },
     image: {
-
+        width: 48,
+        height: 48,
     },
     title: {
-
+        fontSize: 18, 
     },
     titlesWrapper: {
-
+         marginLeft: 8,   
     },
     subtitle: {
-
+         fontSize: 14,
+        color: "#A9ABB1",
+        marginTop: 4,
     }
 }   )
 export default ListItem
