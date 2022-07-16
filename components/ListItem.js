@@ -12,12 +12,12 @@ const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoUrl}
             <Image source = {{uri: logoUrl}} style = {styles.image}/>
             <View style={styles.titlesWrapper}>
                 <Text style = {styles.title}>{name}</Text>
-                <Text style = {styles.subtitle}>{symbol}</Text>
+                <Text style = {styles.subtitle}>{symbol.toUpperCase()}</Text>
             </View>
         </View>
         {/* Rightside */}
         <View style={styles.itemRight}>
-                <Text style = {styles.title}>{currentPrice}</Text>
+                <Text style = {styles.title}>${currentPrice.toLocaleString('en-US')}</Text>
                 <Text style = {[styles.subtitle, {color: 'red'}]}>{priceChangePercentage7d}</Text>
         </View> 
 
