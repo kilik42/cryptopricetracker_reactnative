@@ -8,6 +8,8 @@ const Chart = ({
     symbol,
     name,
 }) => {
+    const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
+
   return (
     <View style = {styles.chartWrapper}>
 
@@ -27,7 +29,7 @@ const Chart = ({
             {/* lower section */}
             <View style = {styles.lowerTitles}>
                 <Text style={styles.boldTitle}>${currentPrice.toLocaleString('en-US', {currency: 'USD'})}</Text>
-                <Text style={styles.title}>
+                <Text style={[styles.title, {color: priceChangeColor}]}>
                     {priceChangePercentage7d.toFixed(2)}%
                     </Text>
             </View>
@@ -77,9 +79,10 @@ const styles = StyleSheet.create({
     boldTitle:{
         fontSize: 24,
         fontWeight: 'bold',
-        
+
     },
     title:{
+        fontSize: 18,
 
     }
 
