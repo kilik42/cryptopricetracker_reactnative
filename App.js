@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
@@ -11,8 +13,7 @@ import {
 //   TouchableHighlight,
 //   TouchableWithoutFeedback,
 // } from '@gorhom/bottom-sheet';
-import { useRef } from 'react';
-import { useMemo } from 'react';
+
 
 const ListHeader = () => (
       <>
