@@ -9,6 +9,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import Chart from './components/Chart';
+import { useState } from 'react';
 // import {
 //   TouchableOpacity,
 //   TouchableHighlight,
@@ -26,12 +27,14 @@ const ListHeader = () => (
 )
 
 export default function App() {
+  const [selectedCoinData, setSelectedCoinData] = useState(null);
     // ref
     const bottomSheetModalRef = useRef(null);
     // variables
     const snapPoints = useMemo(() => [ '50%'], []);
 
-    const openModal = () => {
+    const openModal = (item) => {
+      setSelectedCoinData(item);
       bottomSheetModalRef.current.present();
      }
 
@@ -49,7 +52,7 @@ export default function App() {
           currentPrice={item.current_price}
           priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
           logoUrl={item.image}
-          onPress={() => openModal()}
+          onPress={() => openModal(item)}
           />
          )}
          ListHeaderComponent ={<ListHeader/>}
@@ -64,8 +67,19 @@ export default function App() {
               // onChange={handleSheetChanges}
               style={styles.bottomSheet}
           >
-               <Chart />
-          
+            {selectedCoinData ? (
+               <Chart  
+                currentPrice={selectedCoinData.current_price}
+                priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
+                logoUrl={selectedCoinData.image}
+                name={selectedCoinData.name}
+                symbol={selectedCoinData.symbol}
+                sparkline = {selectedCoinData.sparkline_in_7d.price}
+
+               />)
+               :
+               null
+              }
           </BottomSheetModal>
     </BottomSheetModalProvider>
   );
