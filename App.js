@@ -1,26 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
 
 import {SAMPLE_DATA} from './assets/data/sampleData';
 
+const ListHeader = () => (
+      <>
+        <View style = {styles.titleWrapper}>
+          <Text style={styles.largeTitle}> Markets</Text>
+        </View>
+        <View style = {styles.divider}/>
+      </>
+)
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View style = {styles.titleWrapper}>
-       <Text style={styles.largeTitle}> Markets</Text>
-      </View>
-      <View style = {styles.divider}/>
-      <ListItem    
+    <SafeAreaView style={styles.container}>
+      
+      {/* <ListItem    
             name={item.name}
             symbol={item.symbol}
             currentPrice={item.current_price}
             priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
             logoUrl={item.image}
-            onPress={() => openModal(item)} />
+            onPress={() => openModal(item)} /> */}
 
-    </View>
+      <FlatList 
+        keyExtactor= {(item) => item.id}
+        data = {SAMPLE_DATA}
+        renderItem={({item}) => (
+        <ListItem
+          name={item.name}
+          symbol={item.symbol}
+          currentPrice={item.current_price}
+          priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
+          logoUrl={item.image}
+        
+          />
+         )}
+         ListHeaderComponent ={<ListHeader/>}
+         />
+    
+    </SafeAreaView>
+    
   );
 }
 
@@ -36,7 +58,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   titleWrapper: {
-    marginTop: 80 ,
+    marginTop: 20 ,
     paddingHorizontal: 16
   },
   divider: {
