@@ -1,8 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
-
 import {SAMPLE_DATA} from './assets/data/sampleData';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+// import {
+//   TouchableOpacity,
+//   TouchableHighlight,
+//   TouchableWithoutFeedback,
+// } from '@gorhom/bottom-sheet';
+import { useRef } from 'react';
+import { useMemo } from 'react';
 
 const ListHeader = () => (
       <>
@@ -14,17 +24,19 @@ const ListHeader = () => (
 )
 
 export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      
-      {/* <ListItem    
-            name={item.name}
-            symbol={item.symbol}
-            currentPrice={item.current_price}
-            priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
-            logoUrl={item.image}
-            onPress={() => openModal(item)} /> */}
+    // ref
+    const bottomSheetModalRef = useRef(null);
+    // variables
+    const snapPoints = useMemo(() => [ '50%'], []);
 
+    const openModal = () => {
+      bottomSheetModalRef.current.present();
+     }
+
+  return (
+    <BottomSheetModalProvider> 
+    <SafeAreaView style={styles.container}>
+  
       <FlatList 
         keyExtactor= {(item) => item.id}
         data = {SAMPLE_DATA}
@@ -35,14 +47,26 @@ export default function App() {
           currentPrice={item.current_price}
           priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
           logoUrl={item.image}
-        
+          onPress={() => openModal()}
           />
          )}
          ListHeaderComponent ={<ListHeader/>}
          />
     
     </SafeAreaView>
-    
+
+          <BottomSheetModal
+              ref={bottomSheetModalRef}
+              index={0}
+              snapPoints={snapPoints}
+              // onChange={handleSheetChanges}
+          >
+                <View style={styles.contentContainer}>
+                        <Text>Awesome 🎉</Text>
+                </View>
+          
+          </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
 
