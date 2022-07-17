@@ -8,6 +8,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import Chart from './components/Chart';
 // import {
 //   TouchableOpacity,
 //   TouchableHighlight,
@@ -61,10 +62,9 @@ export default function App() {
               index={0}
               snapPoints={snapPoints}
               // onChange={handleSheetChanges}
+              style={styles.bottomSheet}
           >
-                <View style={styles.contentContainer}>
-                        <Text>Awesome 🎉</Text>
-                </View>
+               <Chart />
           
           </BottomSheetModal>
     </BottomSheetModalProvider>
@@ -93,6 +93,17 @@ const styles = StyleSheet.create({
     marginTop: 16
     
 
+  },
+  bottomSheet:{
+    shadowColor: "#000",
+    shadowOffset:{
+      width: 0,
+      height: -4,
+    }
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    
   }
 
 });
