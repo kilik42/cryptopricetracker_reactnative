@@ -1,5 +1,8 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
+import {Dimensions} from 'react-native';
+import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
+export const {width: SIZE} = Dimensions.get('window');
 
 const Chart = ({
     currentPrice, 
@@ -11,6 +14,7 @@ const Chart = ({
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
 
   return (
+    <ChartPathProvider data={{ points:sparkline, smoothingStrategy: 'bezier' }}>
     <View style = {styles.chartWrapper}>
 
       {/* titles */}
@@ -28,6 +32,12 @@ const Chart = ({
 
             {/* lower section */}
             <View style = {styles.lowerTitles}>
+
+                <ChartYLabel 
+                format={formatUSD}
+                style={{backgroundColor: 'black', color: 'green', margin: 4}}
+
+                />
                 <Text style={styles.boldTitle}>${currentPrice.toLocaleString('en-US', {currency: 'USD'})}</Text>
                 <Text style={[styles.title, {color: priceChangeColor}]}>
                     {priceChangePercentage7d.toFixed(2)}%
@@ -35,14 +45,20 @@ const Chart = ({
             </View>
 
         </View>
-    
+
+        {/* chart */}
+        <View style = {styles.chartLineWrapper}>
+                <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
+                <ChartDot style={{ backgroundColor: 'black' }} />
+        </View>
     </View>
+    </ChartPathProvider>
   )
 }
 
 const styles = StyleSheet.create({
     chartWrapper:{
-        margin: 16,
+        marginVertical: 16,
 
     },
     titlesWrapper:{
@@ -84,6 +100,9 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 18,
 
+    },
+    chartLineWrapper:{
+        marginTop: 40,
     }
 
 
