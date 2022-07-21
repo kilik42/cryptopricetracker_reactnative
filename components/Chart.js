@@ -12,7 +12,17 @@ const Chart = ({
     name,
 }) => {
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
+     const formatUSD = value => {
+        'worklet';
+        if(value === ''){
+            return `${currentPrice.toLocaleString('en-US', {currency: 'USD'})}`;
+        }
 
+        const formattedValue = `${parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+        return `$${value.toLocaleString('en-US', {
+            currency: 'USD',
+        })}`;
+    }
   return (
     <ChartPathProvider data={{ points:sparkline, smoothingStrategy: 'bezier' }}>
     <View style = {styles.chartWrapper}>
@@ -35,7 +45,7 @@ const Chart = ({
 
                 <ChartYLabel 
                 format={formatUSD}
-                style={{backgroundColor: 'black', color: 'green', margin: 4}}
+                style={styles.boldTitle}
 
                 />
                 <Text style={styles.boldTitle}>${currentPrice.toLocaleString('en-US', {currency: 'USD'})}</Text>
