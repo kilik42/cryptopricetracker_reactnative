@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,FlatList, SafeAreaView } from 'react-native';
@@ -10,6 +10,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import Chart from './components/Chart';
 import { useState } from 'react';
+import { getMarketData } from './services/cryptoService';
 // import {
 //   TouchableOpacity,
 //   TouchableHighlight,
@@ -27,7 +28,17 @@ const ListHeader = () => (
 )
 
 export default function App() {
+  const [data, setData] = useState([]);
   const [selectedCoinData, setSelectedCoinData] = useState(null);
+
+  useEffect(() =>{
+    const fetchMarketData  = async () => {
+      const marketData = await getMarketData();
+      setData(marketData);
+    }
+    fetchMarketData();
+  }, []);
+
     // ref
     const bottomSheetModalRef = useRef(null);
     // variables
@@ -44,7 +55,7 @@ export default function App() {
   
       <FlatList 
         keyExtactor= {(item) => item.id}
-        data = {SAMPLE_DATA}
+        data = {data}
         renderItem={({item}) => (
         <ListItem
           name={item.name}
