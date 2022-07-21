@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import {Dimensions} from 'react-native';
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
+import { useSharedValue } from 'react-native-reanimated';
+import { useEffect } from 'react';
 export const {width: SIZE} = Dimensions.get('window');
 
 const Chart = ({
@@ -11,7 +13,12 @@ const Chart = ({
     symbol,
     name,
 }) => {
+    const latestCurrentPrice = useSharedValue(currentPrice);
+
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
+    useEffect(()=>{
+        latestCurrentPrice.value = currentPrice;
+    },[currentPrice])
      const formatUSD = value => {
         'worklet';
         if(value === ''){
