@@ -18,7 +18,8 @@ const Chart = ({
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
     useEffect(()=>{
         latestCurrentPrice.value = currentPrice;
-    },[currentPrice])
+    },[currentPrice]);
+    
      const formatUSD = value => {
         'worklet';
         if(value === ''){
