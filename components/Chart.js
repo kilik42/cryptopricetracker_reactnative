@@ -14,16 +14,20 @@ const Chart = ({
     name,
 }) => {
     const latestCurrentPrice = useSharedValue(currentPrice);
+    const [chartReady, setChartReady] = useState(false);
 
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
     useEffect(()=>{
         latestCurrentPrice.value = currentPrice;
+        setTimeout(()=>{
+            setChartReady(true);
+        },0);
     },[currentPrice]);
-    
+
      const formatUSD = value => {
         'worklet';
         if(value === ''){
-            return `${currentPrice.toLocaleString('en-US', {currency: 'USD'})}`;
+            return `${latestCurrentPrice.value.toLocaleString('en-US', {currency: 'USD'})}`;
         }
 
         const formattedValue = `${parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
@@ -65,10 +69,16 @@ const Chart = ({
         </View>
 
         {/* chart */}
+
+        { chartReady ?
+        ( 
         <View style = {styles.chartLineWrapper}>
                 <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
                 <ChartDot style={{ backgroundColor: 'black' }} />
         </View>
+        ):
+        null}
+
     </View>
     </ChartPathProvider>
   )
